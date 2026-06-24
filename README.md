@@ -27,15 +27,9 @@ Este proyecto es una aplicación sencilla tipo bloc de notas que permite escribi
 
 ---
 
-## 📸 Vista del proyecto
-
-> (Puedes agregar aquí una captura de pantalla de la aplicación)
-
----
-
 ## ▶️ Cómo ejecutar el proyecto
 
 1. Clona este repositorio:
 
 ```bash
-git clone https://github.com/tuusuario/Practicas-Python.git
+git clone https://github.com/erac73/Practicas-Python.git
