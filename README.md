@@ -1,43 +1,47 @@
 # Practicas-Python
-import random
+import tkinter as tk
+from tkinter import messagebox
 
-def jugar():
-    print("🎮 Bienvenido al juego de Adivina el Número")
-    print("Estoy pensando en un número entre 1 y 100...")
+# Crear ventana principal
+ventana = tk.Tk()
+ventana.title("📝 Mi Bloc de Notas")
+ventana.geometry("500x400")
 
-    nivel = input("Elige dificultad (facil / medio / dificil): ").lower()
-
-    if nivel == "facil":
-        intentos = 10
-    elif nivel == "medio":
-        intentos = 7
-    elif nivel == "dificil":
-        intentos = 5
+# Función para guardar texto
+def guardar():
+    texto = caja_texto.get("1.0", tk.END).strip()
+    if texto:
+        with open("notas.txt", "a", encoding="utf-8") as f:
+            f.write(texto + "\n---\n")
+        messagebox.showinfo("Guardado", "Nota guardada correctamente ✅")
+        caja_texto.delete("1.0", tk.END)
     else:
-        print("Nivel inválido, usando modo medio por defecto.")
-        intentos = 7
+        messagebox.showwarning("Error", "No hay texto para guardar ⚠️")
 
-    numero_secreto = random.randint(1, 100)
+# Función para limpiar
+def limpiar():
+    caja_texto.delete("1.0", tk.END)
 
-    while intentos > 0:
-        try:
-            print(f"\nTe quedan {intentos} intentos")
-            adivina = int(input("Ingresa tu número: "))
+# Título
+titulo = tk.Label(ventana, text="Bloc de Notas", font=("Arial", 18))
+titulo.pack(pady=10)
 
-            if adivina == numero_secreto:
-                print("🎉 ¡Correcto! Adivinaste el número.")
-                return
-            elif adivina < numero_secreto:
-                print("📉 Muy bajo")
-            else:
-                print("📈 Muy alto")
+# Caja de texto
+caja_texto = tk.Text(ventana, height=12, width=50)
+caja_texto.pack(pady=10)
 
-            intentos -= 1
+# Botones
+frame_botones = tk.Frame(ventana)
+frame_botones.pack()
 
-        except ValueError:
-            print("⚠️ Debes ingresar un número válido")
+btn_guardar = tk.Button(frame_botones, text="💾 Guardar", command=guardar)
+btn_guardar.grid(row=0, column=0, padx=10)
 
-    print(f"💀 Perdiste. El número era: {numero_secreto}")
+btn_limpiar = tk.Button(frame_botones, text="🧹 Limpiar", command=limpiar)
+btn_limpiar.grid(row=0, column=1, padx=10)
 
-if __name__ == "__main__":
-    jugar()
+btn_salir = tk.Button(frame_botones, text="❌ Salir", command=ventana.quit)
+btn_salir.grid(row=0, column=2, padx=10)
+
+# Ejecutar app
+ventana.mainloop()
